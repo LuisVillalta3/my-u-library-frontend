@@ -1,6 +1,15 @@
-import { Theme, CSSObject } from '@mui/material/styles'
+import { styled, Theme, CSSObject } from '@mui/material/styles'
+import { Drawer as MuiDrawer } from '@mui/material'
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
+import { useState } from 'react'
 
-export const useDrawer = (drawerWidth: number) => {
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean
+}
+
+export const useDrawer = () => {
+  const drawerWidth = 240
+
   const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -30,4 +39,59 @@ export const useDrawer = (drawerWidth: number) => {
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   }))
+
+  const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+  })<AppBarProps>(({ theme, open }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    }),
+  }))
+
+  const Drawer = styled(MuiDrawer, {
+    shouldForwardProp: (prop) => prop !== 'open',
+  })(({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
+  }))
+
+  //
+  const [open, setOpen] = useState(false)
+
+  const handleDrawerOpen = () => {
+    setOpen(true)
+  }
+
+  const handleDrawerClose = () => {
+    setOpen(false)
+  }
+
+  return {
+    Drawer,
+    AppBar,
+    DrawerHeader,
+    open,
+    handleDrawerOpen,
+    handleDrawerClose,
+  }
 }
