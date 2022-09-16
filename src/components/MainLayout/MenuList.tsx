@@ -1,7 +1,10 @@
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { List } from '@mui/material'
 import React from 'react'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
+import { MenuButton } from './MenuButton';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import PersonIcon from '@mui/icons-material/Person';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 
 type props = {
   open: boolean
@@ -10,28 +13,10 @@ type props = {
 export const MenuList: React.FC<props> = ({ open }) => {
   return (
     <List>
-      {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? 'initial' : 'center',
-              px: 2.5,
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : 'auto',
-                justifyContent: 'center',
-              }}
-            >
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-      ))}
+      <MenuButton open={open} href="/" text="Dashboard" icon={<DashboardIcon />} />
+      <MenuButton open={open} href="/users" text="Usuarios" icon={<PersonIcon />} />
+      <MenuButton open={open} href="/books" text="Dashboard" icon={<MenuBookIcon />} />
+      <MenuButton open={open} href="/" text="Dashboard" icon={<LocalLibraryIcon />} />
     </List>
   )
 }
