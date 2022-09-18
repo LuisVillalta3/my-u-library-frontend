@@ -1,12 +1,12 @@
 import React from 'react'
-import MuiTableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import { Column } from '../../types/index';
+import MuiTableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
+import { Column } from '@types'
 
 type Props = {
-  columns: Column[];
-  children?: React.ReactNode;
+  columns: Column[]
+  children?: React.ReactNode
 }
 
 export const TableHead: React.FC<Props> = ({ columns, children }) => {

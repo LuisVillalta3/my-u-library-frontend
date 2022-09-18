@@ -1,9 +1,13 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Dashboard } from './pages/Dashboard'
-import { Users } from './pages/Users'
-import { Books } from './pages/Books'
-import { CreateBook } from './pages/Books/Create'
+import { Dashboard } from '@pages/Dashboard'
+import { Users } from '@pages/Users'
+import { Books } from '@pages/Books'
+import { CreateBook } from '@pages/Books/Create'
+import { Authors } from '@pages/Authors'
+import { CreateAuthor } from '@pages/Authors/create'
+import { EditAuthor } from '@pages/Authors/edit'
+import { ShowAuthor } from '@pages/Authors/show'
 
 export default function App() {
   return (
@@ -13,6 +17,10 @@ export default function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/books" element={<Books />} />
           <Route path="/books/create" element={<CreateBook />} />
+          <Route path="/authors" element={<Authors />} />
+          <Route path="/authors/:id" element={<ShowAuthor />} />
+          <Route path="/authors/create" element={<CreateAuthor />} />
+          <Route path="/authors/:id/edit" element={<EditAuthor />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="*" element={<div>Not Found</div>} />

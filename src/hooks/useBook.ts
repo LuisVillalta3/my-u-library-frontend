@@ -1,6 +1,6 @@
 import { SelectChangeEvent } from '@mui/material'
 import React from 'react'
-import { Book } from '../types'
+import { Book } from '@types'
 
 export const useBook = (id?: string | number) => {
   const [book, setBook] = React.useState<Book>({

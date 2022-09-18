@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
-import { GET_USERS_ENDPOINT } from '../../constants'
+import { GET_USERS_ENDPOINT } from '@constants'
 import axios, { AxiosRequestConfig } from 'axios'
-import { FetchResult } from '../../types'
+import { FetchResult } from '@types'
 
 type GetAllUsersProps = {
   page: number

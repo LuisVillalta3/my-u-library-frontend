@@ -1,14 +1,23 @@
 import React from 'react'
-import { MainLayout } from '../../layouts/MainLayout'
-import { BreadcrumbItem, Heading } from '../../components/Heading'
-import { Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
-import { Column, FetchResult, User } from '../../types'
-import { Loading } from '../../components/Loading'
-import { Error } from '../../components/Error'
-import { TableHead } from '../../components/DataTable/TableHead'
-import { Pagination } from '../../components/DataTable/Pagination'
-import TextField from '@mui/material/TextField';
-import { getAllUsers } from '../../api/users/getAll'
+import { MainLayout } from '@layouts/MainLayout'
+import { BreadcrumbItem, Heading } from '@components/Heading'
+import {
+  Box,
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from '@mui/material'
+import { Column, FetchResult } from '@types'
+import { Loading } from '@components/Loading'
+import { Error } from '@components/Error'
+import { TableHead } from '@components/DataTable/TableHead'
+import { Pagination } from '@components/DataTable/Pagination'
+import TextField from '@mui/material/TextField'
+import { getAllUsers } from '@api/users/getAll'
 
 const items: BreadcrumbItem[] = [{ title: 'Users', current: true }]
 
@@ -18,25 +27,38 @@ const columns: Column[] = [
   { id: 'last_name', label: 'Last name' },
   { id: 'email', label: 'Email' },
   { id: 'role_id', label: 'Role' },
-];
+]
 
 export const Users = () => {
   const {
-    data, error, handleChangeName, handleChangePage, handleChangeRowsPerPage, isLoading, name, page, rowsPerPage,
+    data,
+    error,
+    handleChangeName,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    isLoading,
+    name,
+    page,
+    rowsPerPage,
   } = getAllUsers()
 
   if (error) return <Error items={items} error={error} />
 
-  const res = data as FetchResult || { total: 0, rows: [] }
-  const { rows, total } = res;
+  const res = (data as FetchResult) || { total: 0, rows: [] }
+  const { rows, total } = res
 
   return (
     <MainLayout>
-      <Heading title='Users' items={items} />
+      <Heading title="Users" items={items} />
 
       <Box sx={{ p: 6 }}>
         <Paper style={{ width: '100%' }} elevation={3}>
-          <Grid container spacing={2} sx={{ mb: 3, paddingRight: 3, paddingLeft: 3 }} justifyContent='flex-end'>
+          <Grid
+            container
+            spacing={2}
+            sx={{ mb: 3, paddingRight: 3, paddingLeft: 3 }}
+            justifyContent="flex-end"
+          >
             <Grid item xs={24} md={4}>
               <TextField
                 id="name-filter"
@@ -59,7 +81,12 @@ export const Users = () => {
                   <TableHead columns={columns} />
                   <TableBody>
                     {rows.map((row) => (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.id}
+                      >
                         <TableCell>{row.id}</TableCell>
                         <TableCell>{row.first_name}</TableCell>
                         <TableCell>{row.last_name}</TableCell>

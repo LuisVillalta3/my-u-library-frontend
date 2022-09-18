@@ -1,7 +1,7 @@
 import React from 'react'
-import { GET_BOOKS_ENDPOINT } from '../../constants'
+import { GET_BOOKS_ENDPOINT } from '@constants'
 import axios, { AxiosRequestConfig } from 'axios'
-import { Book } from '../../types'
+import { Book } from '@types'
 
 type GetAllBooksProps = {
   page: number

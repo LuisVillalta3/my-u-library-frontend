@@ -1,10 +1,6 @@
 import React from 'react'
-import { useDrawer } from '../../hooks/useDrawer'
-import {
-  Toolbar,
-  Typography,
-  IconButton,
-} from '@mui/material'
+import { useDrawer } from '@hooks/useDrawer'
+import { Toolbar, Typography, IconButton } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 
 type Props = {
@@ -12,7 +8,7 @@ type Props = {
 }
 
 export const AppBar: React.FC<Props> = ({ open }) => {
-  const { AppBar, handleDrawerOpen} = useDrawer()
+  const { AppBar, handleDrawerOpen } = useDrawer()
 
   return (
     <AppBar position="fixed" open={open}>

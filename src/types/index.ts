@@ -39,5 +39,5 @@ export interface Author extends TimeStamps {
   lastName: string
   id: string | number
   nacionality: string
-  birthDate: string
+  birthday: string
 }

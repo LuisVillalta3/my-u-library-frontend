@@ -6,4 +6,4 @@ export const GET_USERS_ENDPOINT = `${apiEndpoint}/users`
 
 export const GET_BOOKS_ENDPOINT = `${apiEndpoint}/books`
 
-export const GET_ALL_AUTHORS = `${apiEndpoint}/author`
+export const AUTHOR_ENDPOINT = `${apiEndpoint}/author`

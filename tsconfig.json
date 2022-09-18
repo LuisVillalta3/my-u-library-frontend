@@ -15,17 +15,22 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "baseUrl": "./src",
     "paths": {
-      "@hooks/*": ["src/hooks/*"],
-      "@components/*": ["src/components/*"],
-      "@pages/*": ["src/pages/*"],
-      "@utils/*": ["src/utils/*"],
-      "@styles/*": ["src/styles/*"],
-      "@assets/*": ["src/assets/*"],
-      "@types/*": ["src/types/*"],
-      "@context/*": ["src/context/*"],
-      "@api/*": ["src/api/*"],
-      "@/*": ["src/*"]
+      "@hooks/*": ["hooks/*"],
+      "@constants": ["constants"],
+      "@schemas/*": ["schemas/*"],
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"],
+      "@styles/*": ["styles/*"],
+      "@assets/*": ["assets/*"],
+      "@types/*": ["types/*"],
+      "@types": ["types"],
+      "@context/*": ["context/*"],
+      "@api/*": ["api/*"],
+      "@layouts/*": ["layouts/*"],
+      "@/*": ["./*"]
     }
   },
   "include": ["src"]
