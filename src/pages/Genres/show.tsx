@@ -4,42 +4,42 @@ import { MainLayout } from '@layouts/MainLayout'
 import { BreadcrumbItem, Heading } from '@components/Heading'
 import { Box, Button, Grid, Paper, Typography } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAuthor } from '@hooks/useAuthor'
+import { useGenre } from '@hooks/useGenre'
 import { Error } from '@components/Error'
 import { Loading } from '@components/Loading'
 import axios, { AxiosRequestConfig } from 'axios'
-import { AUTHOR_ENDPOINT } from '@constants'
+import { GENRE_ENDPOINT } from '@constants'
 const items: BreadcrumbItem[] = [
-  { title: 'Authors', href: '/authors' },
+  { title: 'Authors', href: '/genres' },
   { title: 'Show', current: true },
 ]
 
-export const ShowAuthor = () => {
+export const ShowGenre = () => {
   const { id } = useParams()
   if (!id) return null
 
-  const { error, isLoading, author, setError, setIsLoading } = useAuthor(id)
+  const { error, isLoading, genre, setError, setIsLoading } = useGenre(id)
   const [isDeleting, setIsDeleting] = React.useState(false)
   const navigate = useNavigate()
 
   const config: AxiosRequestConfig = {
-    url: `${AUTHOR_ENDPOINT}/${id}`,
+    url: `${GENRE_ENDPOINT}/${id}`,
     method: 'DELETE',
   }
 
   React.useEffect(() => {
     if (!isDeleting) return
-    const deleteAuthor = async () => {
+    const deleteGenre = async () => {
       try {
         await axios(config)
-        navigate('/authors')
+        navigate('/genres')
       } catch (error) {
         setError(error)
       } finally {
         setIsLoading(false)
       }
     }
-    deleteAuthor()
+    deleteGenre()
   }, [isDeleting])
 
   const handleDeleteItem = () => {
@@ -50,36 +50,30 @@ export const ShowAuthor = () => {
 
   return (
     <MainLayout>
-      <Heading title="Authors" items={items} />
+      <Heading title="Genres" items={items} />
 
       <Box sx={{ p: 6 }}>
         <Paper style={{ width: '100%' }} sx={{ p: 3 }} elevation={3}>
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
-                Show author
+                Show Genre
               </Typography>
               {isLoading && <Loading />}
               {!isLoading && (
                 <>
                   <Typography variant="body2" gutterBottom sx={{ mb: 3 }}>
-                    <b>First name:</b> {author.first_name}
+                    <b>Name:</b> {genre.name}
                   </Typography>
                   <Typography variant="body2" gutterBottom sx={{ mb: 3 }}>
-                    <b>Last name:</b> {author.last_name}
+                    <b>Description:</b> {genre.description}
                   </Typography>
-                  <Typography variant="body2" gutterBottom sx={{ mb: 3 }}>
-                    <b>Nacionality:</b> {author.nacionality}
-                  </Typography>
-                  <Typography variant="body2" gutterBottom sx={{ mb: 3 }}>
-                    <b>Birthday:</b> {author.birthday}
-                  </Typography>
-                  <Button variant="outlined" href="/authors" sx={{ mr: 1 }}>
+                  <Button variant="outlined" href="/genres" sx={{ mr: 1 }}>
                     Back
                   </Button>
                   <Button
                     variant="contained"
-                    href={`/authors/${author.id}/edit`}
+                    href={`/genres/${genre.id}/edit`}
                     sx={{ mr: 1 }}
                   >
                     Edit

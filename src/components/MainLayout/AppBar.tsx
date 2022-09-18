@@ -5,10 +5,11 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 type Props = {
   open: boolean
+  handleDrawerOpen: () => void
 }
 
-export const AppBar: React.FC<Props> = ({ open }) => {
-  const { AppBar, handleDrawerOpen } = useDrawer()
+export const AppBar: React.FC<Props> = ({ open, handleDrawerOpen }) => {
+  const { AppBar } = useDrawer()
 
   return (
     <AppBar position="fixed" open={open}>

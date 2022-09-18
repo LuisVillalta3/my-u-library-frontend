@@ -35,9 +35,15 @@ export type FetchResult = {
 }
 
 export interface Author extends TimeStamps {
-  firstName: string
-  lastName: string
+  first_name: string
+  last_name: string
   id: string | number
   nacionality: string
   birthday: string
+}
+
+export interface Genre extends TimeStamps {
+  id: string | number
+  name: string
+  description: string
 }

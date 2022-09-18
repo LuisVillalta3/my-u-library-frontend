@@ -11,8 +11,8 @@ type FetchSimpleAuthorProps = {
 type GetAllAuthorsProps = {
   page: number
   rowsPerPage: number
-  firstName: string
-  lastName: string
+  first_name: string
+  last_name: string
 }
 
 export type FetchResultAuthors = {
@@ -24,8 +24,8 @@ export const getAllAuthors = () => {
   const [params, setParams] = React.useState<GetAllAuthorsProps>({
     page: 1,
     rowsPerPage: 10,
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
   })
   const [data, setData] = React.useState<FetchResultAuthors | null>(null)
   const [isLoading, setIsLoading] = React.useState(true)
@@ -66,11 +66,11 @@ export const getAllAuthors = () => {
   const handleChangeFirstName = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setParams({ ...params, firstName: event.target.value })
+    setParams({ ...params, first_name: event.target.value })
   }
 
   const handleChangeLastName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setParams({ ...params, lastName: event.target.value })
+    setParams({ ...params, last_name: event.target.value })
   }
 
   return {

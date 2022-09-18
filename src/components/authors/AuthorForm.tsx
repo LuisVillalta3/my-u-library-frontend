@@ -20,8 +20,8 @@ export const AuthorForm: React.FC<Props> = ({
   return (
     <Formik
       initialValues={{
-        firstName: author.firstName,
-        lastName: author.lastName,
+        first_name: author.first_name,
+        last_name: author.last_name,
         nacionality: author.nacionality,
         birthday: author.birthday,
       }}
@@ -40,10 +40,10 @@ export const AuthorForm: React.FC<Props> = ({
             variant="outlined"
             name="firstName"
             label="Fist Name"
-            value={values.firstName}
+            value={values.first_name}
             onChange={handleChange}
-            error={touched.firstName && Boolean(errors.firstName)}
-            helperText={touched.firstName && errors.firstName}
+            error={touched.first_name && Boolean(errors.first_name)}
+            helperText={touched.first_name && errors.first_name}
           />
           <TextField
             fullWidth
@@ -52,10 +52,10 @@ export const AuthorForm: React.FC<Props> = ({
             variant="outlined"
             name="lastName"
             label="Last Name"
-            value={values.lastName}
+            value={values.last_name}
             onChange={handleChange}
-            error={touched.lastName && Boolean(errors.lastName)}
-            helperText={touched.lastName && errors.lastName}
+            error={touched.last_name && Boolean(errors.last_name)}
+            helperText={touched.last_name && errors.last_name}
           />
           <TextField
             fullWidth

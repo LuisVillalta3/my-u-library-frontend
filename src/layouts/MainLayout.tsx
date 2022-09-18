@@ -11,13 +11,14 @@ type Props = {
 }
 
 export const MainLayout: React.FC<Props> = ({ children }) => {
-  const { DrawerHeader, open, handleDrawerClose } = useDrawer()
+  const { DrawerHeader, open, handleDrawerClose, handleDrawerOpen } =
+    useDrawer()
   const theme = useTheme()
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar open={open} />
+      <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
       <LayoutDrawer
         open={open}
         theme={theme}
