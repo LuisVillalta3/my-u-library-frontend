@@ -2,8 +2,8 @@ const apiUrl: string = process.env.REACT_APP_API_URL || 'http://localhost:3005'
 
 const apiEndpoint = `${apiUrl}/api/v1`
 
-export const GET_USERS_ENDPOINT = (
-  page = 1,
-  rowsPerPage = 10,
-  name = ''
-) => `${apiEndpoint}/users?page=${page}&rowsPerPage=${rowsPerPage}&name=${name}`
+export const GET_USERS_ENDPOINT = `${apiEndpoint}/users`
+
+export const GET_BOOKS_ENDPOINT = `${apiEndpoint}/books`
+
+export const GET_ALL_AUTHORS = `${apiEndpoint}/author`

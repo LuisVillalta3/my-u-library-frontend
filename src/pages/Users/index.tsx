@@ -2,14 +2,13 @@ import React from 'react'
 import { MainLayout } from '../../layouts/MainLayout'
 import { BreadcrumbItem, Heading } from '../../components/Heading'
 import { Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
-import { Column, User } from '../../types'
-import useFetch from 'react-fetch-hook'
+import { Column, FetchResult, User } from '../../types'
 import { Loading } from '../../components/Loading'
-import { GET_USERS_ENDPOINT } from '../../constants'
 import { Error } from '../../components/Error'
 import { TableHead } from '../../components/DataTable/TableHead'
 import { Pagination } from '../../components/DataTable/Pagination'
 import TextField from '@mui/material/TextField';
+import { getAllUsers } from '../../api/users/getAll'
 
 const items: BreadcrumbItem[] = [{ title: 'Users', current: true }]
 
@@ -21,34 +20,14 @@ const columns: Column[] = [
   { id: 'role_id', label: 'Role' },
 ];
 
-type UsersResult = {
-  total: number;
-  rows: User[]
-}
-
 export const Users = () => {
-  const [page, setPage] = React.useState(1);
-  const [name, setName] = React.useState('');
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const { isLoading, data, error } = useFetch(GET_USERS_ENDPOINT(page, rowsPerPage, name))
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  }
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(1);
-  }
-
-  const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-    setPage(1);
-  }
+  const {
+    data, error, handleChangeName, handleChangePage, handleChangeRowsPerPage, isLoading, name, page, rowsPerPage,
+  } = getAllUsers()
 
   if (error) return <Error items={items} error={error} />
 
-  const res = data as UsersResult || { total: 0, rows: [] }
+  const res = data as FetchResult || { total: 0, rows: [] }
   const { rows, total } = res;
 
   return (
@@ -61,11 +40,11 @@ export const Users = () => {
             <Grid item xs={24} md={4}>
               <TextField
                 id="name-filter"
-                label="Buscar por nombre"
+                label="Search by name"
                 fullWidth
                 margin="dense"
                 variant="outlined"
-                onInput={handleChangeName}
+                onChange={handleChangeName}
                 value={name}
               />
             </Grid>
