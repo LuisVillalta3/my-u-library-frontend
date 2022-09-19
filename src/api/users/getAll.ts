@@ -1,33 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
-import { GET_USERS_ENDPOINT } from '@constants'
+import { User } from '@types'
+import { USER_ENDPOINT } from '@constants'
 import axios, { AxiosRequestConfig } from 'axios'
-import { FetchResult } from '@types'
 
 type GetAllUsersProps = {
   page: number
   rowsPerPage: number
-  name?: string
+  first_name: string
+  last_name: string
+  email: string
+}
+
+export type FetchResultusers = {
+  total: number
+  rows: User[]
 }
 
 export const getAllUsers = () => {
   const [params, setParams] = React.useState<GetAllUsersProps>({
     page: 1,
     rowsPerPage: 10,
-    name: '',
+    first_name: '',
+    last_name: '',
+    email: '',
   })
-  const [data, setData] = React.useState<FetchResult | null>(null)
+
+  const [data, setData] = React.useState<FetchResultusers | null>(null)
   const [isLoading, setIsLoading] = React.useState(true)
   const [error, setError] = React.useState<any>(null)
 
   const config: AxiosRequestConfig = {
-    url: GET_USERS_ENDPOINT,
+    url: USER_ENDPOINT,
     method: 'GET',
     params,
   }
 
   React.useEffect(() => {
     setIsLoading(true)
+
     const fetchData = async () => {
       try {
         const res = await axios(config)
@@ -51,17 +62,32 @@ export const getAllUsers = () => {
     setParams({ ...params, rowsPerPage: +event.target.value, page: 1 })
   }
 
-  const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setParams({ ...params, name: event.target.value })
+  const handleChangeFirstName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setParams({ ...params, first_name: event.target.value })
+  }
+
+  const handleChangeLastName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setParams({ ...params, last_name: event.target.value })
+  }
+
+  const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setParams({ ...params, email: event.target.value })
   }
 
   return {
-    isLoading,
     data,
+    isLoading,
     error,
+    handleChangeFirstName,
     handleChangePage,
     handleChangeRowsPerPage,
-    handleChangeName,
+    handleChangeLastName,
+    handleChangeEmail,
     ...params,
+    setError,
+    setIsLoading,
+    setParams,
   }
 }

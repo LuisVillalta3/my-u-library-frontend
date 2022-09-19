@@ -16,6 +16,7 @@ export interface User extends TimeStamps {
   last_name: string
   role_id: string | number
   email: string
+  role?: Role
 }
 
 export interface Book extends TimeStamps {
@@ -45,6 +46,12 @@ export interface Author extends TimeStamps {
 }
 
 export interface Genre extends TimeStamps {
+  id: string | number
+  name: string
+  description: string
+}
+
+export interface Role extends TimeStamps {
   id: string | number
   name: string
   description: string

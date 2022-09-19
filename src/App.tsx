@@ -1,7 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Dashboard } from '@pages/Dashboard'
+// USERS
 import { Users } from '@pages/Users'
+import { CreateUser } from '@pages/Users/create'
+import { ShowUser } from '@pages/Users/show'
 // BOOKS
 import { Books } from '@pages/Books'
 import { CreateBook } from '@pages/Books/Create'
@@ -23,7 +26,10 @@ export default function App() {
     <>
       <BrowserRouter>
         <Routes>
+          {/* USERS */}
           <Route path="/users" element={<Users />} />
+          <Route path="/users/create" element={<CreateUser />} />
+          <Route path="/users/:id" element={<ShowUser />} />
           {/* BOOKS */}
           <Route path="/books" element={<Books />} />
           <Route path="/books/create" element={<CreateBook />} />
