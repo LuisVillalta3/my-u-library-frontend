@@ -2,8 +2,11 @@ import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Dashboard } from '@pages/Dashboard'
 import { Users } from '@pages/Users'
+// BOOKS
 import { Books } from '@pages/Books'
 import { CreateBook } from '@pages/Books/Create'
+import { ShowBook } from '@pages/Books/show'
+import { EditBook } from '@pages/Books/edit'
 // AUTHORS
 import { Authors } from '@pages/Authors'
 import { CreateAuthor } from '@pages/Authors/create'
@@ -21,8 +24,11 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/users" element={<Users />} />
+          {/* BOOKS */}
           <Route path="/books" element={<Books />} />
           <Route path="/books/create" element={<CreateBook />} />
+          <Route path="/books/:id" element={<ShowBook />} />
+          <Route path="/books/:id/edit" element={<EditBook />} />
           {/* AUTHORS */}
           <Route path="/authors" element={<Authors />} />
           <Route path="/authors/:id" element={<ShowAuthor />} />

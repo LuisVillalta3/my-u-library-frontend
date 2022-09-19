@@ -19,11 +19,13 @@ export interface User extends TimeStamps {
 }
 
 export interface Book extends TimeStamps {
-  id?: string | number
+  id: string | number
   description?: string
   title: string
-  author_id: string | number
-  genre_id: string | number
+  author_id: string | number | null
+  genre_id: string | number | null
+  author?: Author
+  genre?: Genre
   published_date: string
   in_stock: number
   available: boolean

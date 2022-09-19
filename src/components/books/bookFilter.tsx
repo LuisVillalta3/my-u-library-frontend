@@ -2,13 +2,18 @@ import React from 'react'
 import { Grid, TextField } from '@mui/material'
 
 type Props = {
-  handleChangeName: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  obj: string
+  handleChangeTitle: (event: React.ChangeEvent<HTMLInputElement>) => void
+  title: string
 }
 
-export const BookFilter: React.FC<Props> = ({ handleChangeName, obj }) => {
+export const BookFilter: React.FC<Props> = ({ handleChangeTitle, title }) => {
   return (
-    <Grid container spacing={2} sx={{ mb: 3, paddingRight: 3, paddingLeft: 3 }} justifyContent='flex-end'>
+    <Grid
+      container
+      spacing={2}
+      sx={{ mb: 3, paddingRight: 3, paddingLeft: 3 }}
+      justifyContent="flex-end"
+    >
       <Grid item xs={24} md={4}>
         <TextField
           id="name-filter"
@@ -16,11 +21,11 @@ export const BookFilter: React.FC<Props> = ({ handleChangeName, obj }) => {
           fullWidth
           margin="dense"
           variant="outlined"
-          onInput={handleChangeName}
-          value={obj}
+          onInput={handleChangeTitle}
+          value={title}
         />
       </Grid>
-      <Grid item xs={24} md={4}>
+      {/* <Grid item xs={24} md={4}>
         <TextField
           id="name-filter"
           label="Search by author name"
@@ -41,7 +46,7 @@ export const BookFilter: React.FC<Props> = ({ handleChangeName, obj }) => {
           onInput={handleChangeName}
           value={name}
         />
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }

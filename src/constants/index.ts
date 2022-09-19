@@ -4,7 +4,6 @@ const apiEndpoint = `${apiUrl}/api/v1`
 
 export const GET_USERS_ENDPOINT = `${apiEndpoint}/users`
 
-export const GET_BOOKS_ENDPOINT = `${apiEndpoint}/books`
-
+export const BOOK_ENDPOINT = `${apiEndpoint}/books`
 export const AUTHOR_ENDPOINT = `${apiEndpoint}/author`
 export const GENRE_ENDPOINT = `${apiEndpoint}/genres`

@@ -7,33 +7,29 @@ import { BookForm } from '@components/books/BookForm'
 import { Book } from '@types'
 import axios, { AxiosRequestConfig } from 'axios'
 import { BOOK_ENDPOINT } from '@constants'
-import { useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+import { useBook } from '@hooks/useBook'
+import { Loading } from '@components/Loading'
 
-const items: BreadcrumbItem[] = [
-  { title: 'Books', href: '/books' },
-  { title: 'Create', current: true },
-]
+export const EditBook = () => {
+  const { id } = useParams()
+  if (!id) return null
 
-const config: AxiosRequestConfig = {
-  url: BOOK_ENDPOINT,
-  method: 'POST',
-}
+  const items: BreadcrumbItem[] = [
+    { title: 'Books', href: '/books' },
+    { title: id, href: `/books/${id}` },
+    { title: 'Edit', current: true },
+  ]
 
-export const CreateBook = () => {
+  const config: AxiosRequestConfig = {
+    url: `${BOOK_ENDPOINT}/${id}`,
+    method: 'PUT',
+  }
+
   const [isLoading, setIsLoading] = React.useState(false)
   const [error, setError] = React.useState<any>(null)
   const [isValid, setIsValid] = React.useState(false)
-  const [book, setBook] = React.useState<Book>({
-    id: 0,
-    description: '',
-    author_id: '',
-    genre_id: '',
-    available: true,
-    in_stock: 0,
-    published_date: '',
-    title: '',
-  })
-
+  const { book, setBook } = useBook(id)
   const navigate = useNavigate()
 
   React.useEffect(() => {
@@ -43,8 +39,8 @@ export const CreateBook = () => {
     const fetchData = async () => {
       try {
         const res = await axios(config)
-        const newAuthor = res.data as Book
-        navigate(`/books/${newAuthor.id}`)
+        const Bewbook = res.data as Book
+        navigate(`/books/${Bewbook.id}`)
       } catch (error) {
         setError(error)
       } finally {
@@ -63,7 +59,7 @@ export const CreateBook = () => {
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Typography variant="h4" gutterBottom>
-                Create book
+                Edit Book
               </Typography>
               {error && (
                 <Alert severity="error" sx={{ mb: 3 }}>
@@ -73,12 +69,15 @@ export const CreateBook = () => {
                     'An error has occurred'}
                 </Alert>
               )}
-              <BookForm
-                book={book}
-                setBook={setBook}
-                setIsValid={setIsValid}
-                isLoading={isLoading}
-              />
+              {book.id == 0 && <Loading />}
+              {book.id != 0 && (
+                <BookForm
+                  book={book}
+                  setBook={setBook}
+                  setIsValid={setIsValid}
+                  isLoading={isLoading}
+                />
+              )}
             </Grid>
           </Grid>
         </Paper>

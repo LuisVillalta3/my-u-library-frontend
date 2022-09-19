@@ -42,7 +42,7 @@ export const MenuList: React.FC<props> = ({ open }) => {
       <MenuButton
         open={open}
         href="/books"
-        text="Dashboard"
+        text="Books"
         icon={<MenuBookIcon />}
       />
       <MenuButton
