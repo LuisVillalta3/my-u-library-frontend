@@ -8,6 +8,9 @@ export const useGenre = (id: string | number) => {
   const config: AxiosRequestConfig = {
     url: `${GENRE_ENDPOINT}/${id}`,
     method: 'GET',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   }
 
   const [isLoading, setIsLoading] = React.useState(false)

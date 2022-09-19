@@ -34,6 +34,9 @@ export const getAllUsers = () => {
     url: USER_ENDPOINT,
     method: 'GET',
     params,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   }
 
   React.useEffect(() => {

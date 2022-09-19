@@ -8,6 +8,9 @@ export const useAuthor = (id: string | number) => {
   const config: AxiosRequestConfig = {
     url: `${AUTHOR_ENDPOINT}/${id}`,
     method: 'GET',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   }
 
   const [isLoading, setIsLoading] = React.useState(false)

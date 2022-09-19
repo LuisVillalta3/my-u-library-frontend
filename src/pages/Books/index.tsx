@@ -68,6 +68,9 @@ export const Books = () => {
       const config: AxiosRequestConfig = {
         url: `${BOOK_ENDPOINT}/${deleteId}`,
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       }
       try {
         await axios(config)

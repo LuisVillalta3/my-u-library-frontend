@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+// DASHBOARD
 import { Dashboard } from '@pages/Dashboard'
 // USERS
 import { Users } from '@pages/Users'
@@ -20,6 +21,8 @@ import { Genres } from '@pages/Genres'
 import { CreateGenre } from '@pages/Genres/create'
 import { ShowGenre } from '@pages/Genres/show'
 import { EditGenre } from '@pages/Genres/edit'
+// LOGIN
+import { Login } from '@pages/Login'
 
 export default function App() {
   return (
@@ -45,8 +48,11 @@ export default function App() {
           <Route path="/genres/create" element={<CreateGenre />} />
           <Route path="/genres/:id" element={<ShowGenre />} />
           <Route path="/genres/:id/edit" element={<EditGenre />} />
-          {/*  */}
+          {/* DASHBOARD */}
           <Route path="/dashboard" element={<Dashboard />} />
+          {/* LOGIN */}
+          <Route path="/login" element={<Login />} />
+          {/* OTHERS */}
           <Route path="/" element={<Dashboard />} />
           <Route path="*" element={<div>Not Found</div>} />
         </Routes>

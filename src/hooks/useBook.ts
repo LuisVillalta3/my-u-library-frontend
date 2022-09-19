@@ -8,6 +8,9 @@ export const useBook = (id: string | number) => {
   const config: AxiosRequestConfig = {
     url: `${BOOK_ENDPOINT}/${id}`,
     method: 'GET',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   }
 
   const [isLoading, setIsLoading] = React.useState(false)

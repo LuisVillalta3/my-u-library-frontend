@@ -24,6 +24,9 @@ export const EditAuthor = () => {
   const config: AxiosRequestConfig = {
     url: `${AUTHOR_ENDPOINT}/${id}`,
     method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   }
 
   const [isLoading, setIsLoading] = React.useState(false)

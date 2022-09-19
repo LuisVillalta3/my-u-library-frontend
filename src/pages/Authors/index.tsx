@@ -66,6 +66,9 @@ export const Authors = () => {
       const config: AxiosRequestConfig = {
         url: `${AUTHOR_ENDPOINT}/${deleteId}`,
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       }
       try {
         await axios(config)

@@ -26,6 +26,9 @@ export const ShowBook = () => {
   const config: AxiosRequestConfig = {
     url: `${BOOK_ENDPOINT}/${id}`,
     method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   }
 
   React.useEffect(() => {
@@ -84,13 +87,16 @@ export const ShowBook = () => {
                   <Typography variant="body2" gutterBottom sx={{ mb: 3 }}>
                     <b>In Stock:</b> {book.in_stock}
                   </Typography>
-                  <Typography variant="body2" gutterBottom sx={{ mb: 3 }}>
-                    <b>Available:</b>
+                  <div>
+                    <Typography variant="body2" gutterBottom sx={{ mb: 3 }}>
+                      <b>Available:</b>
+                    </Typography>
                     <Chip
                       label={book.available ? 'Yes' : 'No'}
                       color={book.available ? 'success' : 'error'}
                     />
-                  </Typography>
+                  </div>
+                  <br />
                   <Button variant="outlined" href="/Books" sx={{ mr: 1 }}>
                     Back
                   </Button>

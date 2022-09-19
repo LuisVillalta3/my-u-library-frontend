@@ -25,6 +25,9 @@ export const ShowGenre = () => {
   const config: AxiosRequestConfig = {
     url: `${GENRE_ENDPOINT}/${id}`,
     method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   }
 
   React.useEffect(() => {

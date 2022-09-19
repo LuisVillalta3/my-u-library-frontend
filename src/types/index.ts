@@ -56,3 +56,8 @@ export interface Role extends TimeStamps {
   name: string
   description: string
 }
+
+export interface Login {
+  email: string
+  password: string
+}

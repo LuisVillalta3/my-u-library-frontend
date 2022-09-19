@@ -24,6 +24,9 @@ export const EditGenre = () => {
   const config: AxiosRequestConfig = {
     url: `${GENRE_ENDPOINT}/${id}`,
     method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   }
 
   const [isLoading, setIsLoading] = React.useState(false)

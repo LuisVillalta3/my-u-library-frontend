@@ -1,10 +1,11 @@
 import React from 'react'
-import { useTheme } from '@mui/material/styles'
 import { Box, CssBaseline } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { useDrawer } from '@hooks/useDrawer'
 import { MenuList } from '@components/MainLayout/MenuList'
 import { LayoutDrawer } from '@components/MainLayout/LayoutDrawer'
 import { AppBar } from '@components/MainLayout/AppBar'
+import { useNavigate } from 'react-router-dom'
 
 type Props = {
   children: React.ReactNode
@@ -14,6 +15,15 @@ export const MainLayout: React.FC<Props> = ({ children }) => {
   const { DrawerHeader, open, handleDrawerClose, handleDrawerOpen } =
     useDrawer()
   const theme = useTheme()
+
+  const navigate = useNavigate()
+  const token = localStorage.getItem('token')
+
+  React.useEffect(() => {
+    if (!token) navigate('/login')
+  }, [])
+
+  if (!token) return null
 
   return (
     <Box sx={{ display: 'flex' }}>

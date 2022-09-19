@@ -17,6 +17,9 @@ const items: BreadcrumbItem[] = [
 const config: AxiosRequestConfig = {
   url: AUTHOR_ENDPOINT,
   method: 'POST',
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+  },
 }
 
 export const CreateAuthor = () => {

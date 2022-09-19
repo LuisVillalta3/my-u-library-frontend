@@ -7,3 +7,4 @@ export const BOOK_ENDPOINT = `${apiEndpoint}/books`
 export const AUTHOR_ENDPOINT = `${apiEndpoint}/author`
 export const GENRE_ENDPOINT = `${apiEndpoint}/genres`
 export const ROLE_ENDPOINT = `${apiEndpoint}/roles`
+export const AUTH_ENDPOINT = `${apiEndpoint}/auth/login`

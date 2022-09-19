@@ -28,7 +28,7 @@ const items: BreadcrumbItem[] = [{ title: 'Users', current: true }]
 const columns: Column[] = [
   { id: 'id', label: 'ID' },
   { id: 'name', label: 'First Name' },
-  { id: 'name', label: 'LastName' },
+  { id: 'lastname', label: 'LastName' },
   { id: 'email', label: 'Email' },
   { id: 'Role', label: 'Role' },
   { id: 'options', label: 'Options' },
@@ -65,6 +65,9 @@ export const Users = () => {
       const config: AxiosRequestConfig = {
         url: `${USER_ENDPOINT}/${deleteId}`,
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       }
       try {
         await axios(config)

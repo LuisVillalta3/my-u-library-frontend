@@ -36,9 +36,9 @@ export const AuthorForm: React.FC<Props> = ({
           <TextField
             fullWidth
             sx={{ mb: 3 }}
-            id="firstName"
+            id="first_name"
             variant="outlined"
-            name="firstName"
+            name="first_name"
             label="Fist Name"
             value={values.first_name}
             onChange={handleChange}
@@ -48,9 +48,9 @@ export const AuthorForm: React.FC<Props> = ({
           <TextField
             fullWidth
             sx={{ mb: 3 }}
-            id="lastName"
+            id="last_name"
             variant="outlined"
-            name="lastName"
+            name="last_name"
             label="Last Name"
             value={values.last_name}
             onChange={handleChange}

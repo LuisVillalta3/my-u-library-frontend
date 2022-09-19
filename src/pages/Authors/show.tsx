@@ -25,6 +25,9 @@ export const ShowAuthor = () => {
   const config: AxiosRequestConfig = {
     url: `${AUTHOR_ENDPOINT}/${id}`,
     method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   }
 
   React.useEffect(() => {

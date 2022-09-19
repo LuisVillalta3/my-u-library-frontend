@@ -24,6 +24,9 @@ type Props = {
 const configRoles: AxiosRequestConfig = {
   url: ROLE_ENDPOINT,
   method: 'GET',
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+  },
 }
 
 export const UserForm: React.FC<Props> = ({

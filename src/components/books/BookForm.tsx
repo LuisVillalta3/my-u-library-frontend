@@ -25,11 +25,17 @@ type Props = {
 const configAuthors: AxiosRequestConfig = {
   url: AUTHOR_ENDPOINT,
   method: 'GET',
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+  },
 }
 
 const configGenres: AxiosRequestConfig = {
   url: GENRE_ENDPOINT,
   method: 'GET',
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+  },
 }
 
 export const BookForm: React.FC<Props> = ({

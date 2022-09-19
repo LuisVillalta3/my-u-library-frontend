@@ -35,6 +35,9 @@ export const getAllAuthors = () => {
     url: AUTHOR_ENDPOINT,
     method: 'GET',
     params,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   }
 
   React.useEffect(() => {
@@ -96,6 +99,9 @@ export const getSimpleAuthors = () => {
   const config: AxiosRequestConfig = {
     url: AUTHOR_ENDPOINT,
     method: 'GET',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   }
 
   React.useEffect(() => {
