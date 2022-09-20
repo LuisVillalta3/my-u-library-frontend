@@ -6,6 +6,7 @@ import { MenuList } from '@components/MainLayout/MenuList'
 import { LayoutDrawer } from '@components/MainLayout/LayoutDrawer'
 import { AppBar } from '@components/MainLayout/AppBar'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@hooks/useAuth'
 
 type Props = {
   children: React.ReactNode
@@ -17,13 +18,12 @@ export const MainLayout: React.FC<Props> = ({ children }) => {
   const theme = useTheme()
 
   const navigate = useNavigate()
-  const token = localStorage.getItem('token')
 
+  const { checkAuth } = useAuth()
+  const redirectToLogin = !checkAuth()
   React.useEffect(() => {
-    if (!token) navigate('/login')
+    if (redirectToLogin) navigate('/login')
   }, [])
-
-  if (!token) return null
 
   return (
     <Box sx={{ display: 'flex' }}>

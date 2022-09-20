@@ -4,14 +4,29 @@ import { MainLayout } from '@layouts/MainLayout'
 import { BreadcrumbItem, Heading } from '@components/Heading'
 import { Alert, Box, Grid, Paper, Typography } from '@mui/material'
 import { AuthorForm } from '@components/authors/AuthorForm'
-import { Author } from '@types'
+import { Author, DecodedToken, User } from '@types'
 import axios, { AxiosRequestConfig } from 'axios'
 import { AUTHOR_ENDPOINT } from '@constants'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuthor } from '@hooks/useAuthor'
 import { Loading } from '@components/Loading'
+import { decodeToken } from 'react-jwt'
+
+const token = localStorage.getItem('token')
 
 export const EditAuthor = () => {
+  if (!token) return null
+
+  const tokenDecoded = decodeToken(token) as DecodedToken
+  const navigate = useNavigate()
+  const currentUser = JSON.parse(tokenDecoded?.user) as User
+  if (!tokenDecoded || currentUser?.role?.code != 'librarian') {
+    React.useEffect(() => {
+      navigate('/login')
+    }, [])
+    return null
+  }
+
   const { id } = useParams()
   if (!id) return null
 
@@ -33,7 +48,6 @@ export const EditAuthor = () => {
   const [error, setError] = React.useState<any>(null)
   const [isValid, setIsValid] = React.useState(false)
   const { author, setAuthor } = useAuthor(id)
-  const navigate = useNavigate()
 
   React.useEffect(() => {
     if (!isValid) return

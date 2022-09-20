@@ -9,18 +9,33 @@ import { Error } from '@components/Error'
 import { Loading } from '@components/Loading'
 import axios, { AxiosRequestConfig } from 'axios'
 import { AUTHOR_ENDPOINT } from '@constants'
+import { DecodedToken, User } from '@types'
+import { decodeToken } from 'react-jwt'
 const items: BreadcrumbItem[] = [
   { title: 'Authors', href: '/authors' },
   { title: 'Show', current: true },
 ]
 
+const token = localStorage.getItem('token')
+
 export const ShowAuthor = () => {
+  if (!token) return null
+
+  const tokenDecoded = decodeToken(token) as DecodedToken
+  const navigate = useNavigate()
+  const currentUser = JSON.parse(tokenDecoded?.user) as User
+  if (!tokenDecoded || currentUser?.role?.code != 'librarian') {
+    React.useEffect(() => {
+      navigate('/login')
+    }, [])
+    return null
+  }
+
   const { id } = useParams()
   if (!id) return null
 
   const { error, isLoading, author, setError, setIsLoading } = useAuthor(id)
   const [isDeleting, setIsDeleting] = React.useState(false)
-  const navigate = useNavigate()
 
   const config: AxiosRequestConfig = {
     url: `${AUTHOR_ENDPOINT}/${id}`,

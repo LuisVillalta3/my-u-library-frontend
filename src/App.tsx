@@ -33,11 +33,6 @@ export default function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/users/create" element={<CreateUser />} />
           <Route path="/users/:id" element={<ShowUser />} />
-          {/* BOOKS */}
-          <Route path="/books" element={<Books />} />
-          <Route path="/books/create" element={<CreateBook />} />
-          <Route path="/books/:id" element={<ShowBook />} />
-          <Route path="/books/:id/edit" element={<EditBook />} />
           {/* AUTHORS */}
           <Route path="/authors" element={<Authors />} />
           <Route path="/authors/:id" element={<ShowAuthor />} />
@@ -48,6 +43,11 @@ export default function App() {
           <Route path="/genres/create" element={<CreateGenre />} />
           <Route path="/genres/:id" element={<ShowGenre />} />
           <Route path="/genres/:id/edit" element={<EditGenre />} />
+          {/* BOOKS */}
+          <Route path="/books" element={<Books />} />
+          <Route path="/books/create" element={<CreateBook />} />
+          <Route path="/books/:id" element={<ShowBook />} />
+          <Route path="/books/:id/edit" element={<EditBook />} />
           {/* DASHBOARD */}
           <Route path="/dashboard" element={<Dashboard />} />
           {/* LOGIN */}

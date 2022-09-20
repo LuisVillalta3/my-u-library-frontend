@@ -12,7 +12,7 @@ import {
   TableContainer,
   TableRow,
 } from '@mui/material'
-import { Column } from '@types'
+import { Column, DecodedToken, User } from '@types'
 import { Loading } from '@components/Loading'
 import { Error } from '@components/Error'
 import { TableHead } from '@components/DataTable/TableHead'
@@ -25,6 +25,8 @@ import { ViewButton } from '@components/Button/ViewButton'
 import axios, { AxiosRequestConfig } from 'axios'
 import { AUTHOR_ENDPOINT } from '@constants'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { decodeToken } from 'react-jwt'
+import { useNavigate } from 'react-router-dom'
 
 const items: BreadcrumbItem[] = [{ title: 'Authors', current: true }]
 
@@ -37,7 +39,21 @@ const columns: Column[] = [
   { id: 'options', label: 'Options' },
 ]
 
+const token = localStorage.getItem('token')
+
 export const Authors = () => {
+  if (!token) return null
+
+  const tokenDecoded = decodeToken(token) as DecodedToken
+  const navigate = useNavigate()
+  const currentUser = JSON.parse(tokenDecoded?.user) as User
+  if (!tokenDecoded || currentUser?.role?.code != 'librarian') {
+    React.useEffect(() => {
+      navigate('/login')
+    }, [])
+    return null
+  }
+
   const {
     data,
     error,

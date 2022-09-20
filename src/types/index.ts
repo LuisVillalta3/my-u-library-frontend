@@ -62,3 +62,9 @@ export interface Login {
   email: string
   password: string
 }
+
+export interface DecodedToken {
+  exp: number
+  user: string
+  time: number
+}

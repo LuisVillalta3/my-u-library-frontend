@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import { Genre } from '@types'
 import { GENRE_ENDPOINT } from '@constants'

@@ -38,7 +38,7 @@ export const MenuList: React.FC<props> = ({ open }) => {
         text="Dashboard"
         icon={<DashboardIcon />}
       />
-      {user?.role?.code === 'librarian' && (
+      {user?.role?.code == 'librarian' && (
         <>
           <MenuButton
             open={open}

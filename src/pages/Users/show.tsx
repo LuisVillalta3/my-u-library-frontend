@@ -3,17 +3,33 @@ import React from 'react'
 import { MainLayout } from '@layouts/MainLayout'
 import { BreadcrumbItem, Heading } from '@components/Heading'
 import { Box, Button, Grid, Paper, Typography } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useUser } from '@hooks/useUser'
 import { Error } from '@components/Error'
 import { Loading } from '@components/Loading'
+import { DecodedToken, User } from '@types'
+import { decodeToken } from 'react-jwt'
 
 const items: BreadcrumbItem[] = [
   { title: 'Users', href: '/users' },
   { title: 'Show', current: true },
 ]
 
+const token = localStorage.getItem('token')
+
 export const ShowUser = () => {
+  if (!token) return null
+
+  const tokenDecoded = decodeToken(token) as DecodedToken
+  const navigate = useNavigate()
+  const currentUser = JSON.parse(tokenDecoded?.user) as User
+  if (!tokenDecoded || currentUser?.role?.code != 'librarian') {
+    React.useEffect(() => {
+      navigate('/login')
+    }, [])
+    return null
+  }
+
   const { id } = useParams()
   if (!id) return null
 
