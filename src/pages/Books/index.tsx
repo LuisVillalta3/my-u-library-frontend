@@ -13,7 +13,7 @@ import {
   TableContainer,
   TableRow,
 } from '@mui/material'
-import { Column } from '@types'
+import { Column, DecodedToken, User } from '@types'
 import { Loading } from '@components/Loading'
 import { Error } from '@components/Error'
 import { TableHead } from '@components/DataTable/TableHead'
@@ -26,6 +26,8 @@ import { ViewButton } from '@components/Button/ViewButton'
 import axios, { AxiosRequestConfig } from 'axios'
 import { BOOK_ENDPOINT } from '@constants'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { decodeToken } from 'react-jwt'
+import { useNavigate } from 'react-router-dom'
 
 const items: BreadcrumbItem[] = [{ title: 'Books', current: true }]
 
@@ -41,7 +43,23 @@ const columns: Column[] = [
   { id: 'options', label: 'Options' },
 ]
 
+const token = localStorage.getItem('token')
+
 export const Books = () => {
+  if (!token) return null
+
+  const tokenDecoded = decodeToken(token) as DecodedToken
+  const navigate = useNavigate()
+  const currentUser = JSON.parse(tokenDecoded?.user) as User
+
+  if (!tokenDecoded) {
+    React.useEffect(() => {
+      navigate('/login')
+    }, [])
+    return null
+  }
+  const isLibrarian = currentUser?.role?.code == 'librarian'
+
   const {
     data,
     error,
@@ -54,6 +72,10 @@ export const Books = () => {
     handleChangeTitle,
     rowsPerPage,
     setError,
+    author_id,
+    handleChangeAuthor,
+    genre_id,
+    handleChangeGenre,
     setIsLoading,
   } = getAllBooks()
 
@@ -74,7 +96,7 @@ export const Books = () => {
       }
       try {
         await axios(config)
-        setParams({ page: 1, rowsPerPage, title })
+        setParams({ page: 1, rowsPerPage, title, author_id, genre_id })
       } catch (error) {
         setError(error)
       } finally {
@@ -90,15 +112,24 @@ export const Books = () => {
       <Heading title="Books" items={items} />
       <Box sx={{ p: 6 }}>
         <Paper style={{ width: '100%' }} elevation={3}>
-          <Button
-            href="/books/create"
-            variant="contained"
-            sx={{ m: 3 }}
-            endIcon={<AddCircleIcon />}
-          >
-            Add new book
-          </Button>
-          <BookFilter title={title} handleChangeTitle={handleChangeTitle} />
+          {isLibrarian && (
+            <Button
+              href="/books/create"
+              variant="contained"
+              sx={{ m: 3 }}
+              endIcon={<AddCircleIcon />}
+            >
+              Add new book
+            </Button>
+          )}
+          <BookFilter
+            title={title}
+            handleChangeTitle={handleChangeTitle}
+            author_id={author_id}
+            handleChangeAuthor={handleChangeAuthor}
+            genre_id={genre_id}
+            handleChangeGenre={handleChangeGenre}
+          />
           {isLoading && <Loading />}
           {!isLoading && (
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -133,14 +164,18 @@ export const Books = () => {
                         </TableCell>
                         <TableCell>
                           <ViewButton href={`/books/${row.id}`} />
-                          <EditButton href={`/books/${row.id}/edit`} />
-                          <IconButton
-                            aria-label="delete"
-                            color="error"
-                            onClick={() => setDeleteId(row.id)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
+                          {isLibrarian && (
+                            <>
+                              <EditButton href={`/books/${row.id}/edit`} />
+                              <IconButton
+                                aria-label="delete"
+                                color="error"
+                                onClick={() => setDeleteId(row.id)}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}

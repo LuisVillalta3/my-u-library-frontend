@@ -9,19 +9,36 @@ import { Error } from '@components/Error'
 import { Loading } from '@components/Loading'
 import axios, { AxiosRequestConfig } from 'axios'
 import { BOOK_ENDPOINT } from '@constants'
+import { decodeToken } from 'react-jwt'
+import { DecodedToken, User } from '@types'
 
 const items: BreadcrumbItem[] = [
   { title: 'Books', href: '/books' },
   { title: 'Show', current: true },
 ]
 
+const token = localStorage.getItem('token')
+
 export const ShowBook = () => {
+  if (!token) return null
+
+  const tokenDecoded = decodeToken(token) as DecodedToken
+  const navigate = useNavigate()
+  const currentUser = JSON.parse(tokenDecoded?.user) as User
+
+  if (!tokenDecoded) {
+    React.useEffect(() => {
+      navigate('/login')
+    }, [])
+    return null
+  }
+  const isLibrarian = currentUser?.role?.code == 'librarian'
+
   const { id } = useParams()
   if (!id) return null
 
   const { error, isLoading, book, setError, setIsLoading } = useBook(id)
   const [isDeleting, setIsDeleting] = React.useState(false)
-  const navigate = useNavigate()
 
   const config: AxiosRequestConfig = {
     url: `${BOOK_ENDPOINT}/${id}`,
@@ -100,20 +117,24 @@ export const ShowBook = () => {
                   <Button variant="outlined" href="/Books" sx={{ mr: 1 }}>
                     Back
                   </Button>
-                  <Button
-                    variant="contained"
-                    href={`/books/${book.id}/edit`}
-                    sx={{ mr: 1 }}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="error"
-                    onClick={() => handleDeleteItem()}
-                  >
-                    Delete
-                  </Button>
+                  {isLibrarian && (
+                    <>
+                      <Button
+                        variant="contained"
+                        href={`/books/${book.id}/edit`}
+                        sx={{ mr: 1 }}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        onClick={() => handleDeleteItem()}
+                      >
+                        Delete
+                      </Button>
+                    </>
+                  )}
                 </>
               )}
             </Grid>

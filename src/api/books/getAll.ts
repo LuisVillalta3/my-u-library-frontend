@@ -1,13 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosRequestConfig } from 'axios'
 import React from 'react'
 import { Book } from '@types'
 import { BOOK_ENDPOINT } from '@constants'
+import { SelectChangeEvent } from '@mui/material'
 
 type GetAllBooksProps = {
   page: number
   rowsPerPage: number
   title: string
+  author_id: string | number
+  genre_id: string | number
 }
 
 export type FetchResultBooks = {
@@ -20,6 +24,8 @@ export const getAllBooks = () => {
     page: 1,
     rowsPerPage: 10,
     title: '',
+    author_id: '',
+    genre_id: '',
   })
   const [data, setData] = React.useState<FetchResultBooks | null>(null)
   const [isLoading, setIsLoading] = React.useState(true)
@@ -64,6 +70,20 @@ export const getAllBooks = () => {
     setParams({ ...params, title: event.target.value })
   }
 
+  const handleChangeAuthor = (
+    event: SelectChangeEvent<string | number>,
+    child: React.ReactNode
+  ) => {
+    setParams({ ...params, author_id: event.target.value })
+  }
+
+  const handleChangeGenre = (
+    event: SelectChangeEvent<string | number>,
+    child: React.ReactNode
+  ) => {
+    setParams({ ...params, genre_id: event.target.value })
+  }
+
   return {
     isLoading,
     data,
@@ -75,5 +95,7 @@ export const getAllBooks = () => {
     setError,
     setIsLoading,
     setParams,
+    handleChangeAuthor,
+    handleChangeGenre,
   }
 }

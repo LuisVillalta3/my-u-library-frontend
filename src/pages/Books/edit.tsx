@@ -4,14 +4,29 @@ import { MainLayout } from '@layouts/MainLayout'
 import { BreadcrumbItem, Heading } from '@components/Heading'
 import { Alert, Box, Grid, Paper, Typography } from '@mui/material'
 import { BookForm } from '@components/books/BookForm'
-import { Book } from '@types'
+import { Book, DecodedToken, User } from '@types'
 import axios, { AxiosRequestConfig } from 'axios'
 import { BOOK_ENDPOINT } from '@constants'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useBook } from '@hooks/useBook'
 import { Loading } from '@components/Loading'
+import { decodeToken } from 'react-jwt'
+
+const token = localStorage.getItem('token')
 
 export const EditBook = () => {
+  if (!token) return null
+
+  const tokenDecoded = decodeToken(token) as DecodedToken
+  const navigate = useNavigate()
+  const currentUser = JSON.parse(tokenDecoded?.user) as User
+  if (!tokenDecoded || currentUser?.role?.code != 'librarian') {
+    React.useEffect(() => {
+      navigate('/login')
+    }, [])
+    return null
+  }
+
   const { id } = useParams()
   if (!id) return null
 
@@ -33,7 +48,6 @@ export const EditBook = () => {
   const [error, setError] = React.useState<any>(null)
   const [isValid, setIsValid] = React.useState(false)
   const { book, setBook } = useBook(id)
-  const navigate = useNavigate()
 
   React.useEffect(() => {
     if (!isValid) return

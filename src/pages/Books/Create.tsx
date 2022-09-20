@@ -4,10 +4,11 @@ import { MainLayout } from '@layouts/MainLayout'
 import { BreadcrumbItem, Heading } from '@components/Heading'
 import { Alert, Box, Grid, Paper, Typography } from '@mui/material'
 import { BookForm } from '@components/books/BookForm'
-import { Book } from '@types'
+import { Book, DecodedToken, User } from '@types'
 import axios, { AxiosRequestConfig } from 'axios'
 import { BOOK_ENDPOINT } from '@constants'
 import { useNavigate } from 'react-router-dom'
+import { decodeToken } from 'react-jwt'
 
 const items: BreadcrumbItem[] = [
   { title: 'Books', href: '/books' },
@@ -22,7 +23,21 @@ const config: AxiosRequestConfig = {
   },
 }
 
+const token = localStorage.getItem('token')
+
 export const CreateBook = () => {
+  if (!token) return null
+
+  const tokenDecoded = decodeToken(token) as DecodedToken
+  const navigate = useNavigate()
+  const currentUser = JSON.parse(tokenDecoded?.user) as User
+  if (!tokenDecoded || currentUser?.role?.code != 'librarian') {
+    React.useEffect(() => {
+      navigate('/login')
+    }, [])
+    return null
+  }
+
   const [isLoading, setIsLoading] = React.useState(false)
   const [error, setError] = React.useState<any>(null)
   const [isValid, setIsValid] = React.useState(false)
@@ -36,8 +51,6 @@ export const CreateBook = () => {
     published_date: '',
     title: '',
   })
-
-  const navigate = useNavigate()
 
   React.useEffect(() => {
     if (!isValid) return
