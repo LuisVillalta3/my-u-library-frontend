@@ -8,7 +8,7 @@ import { useBook } from '@hooks/useBook'
 import { Error } from '@components/Error'
 import { Loading } from '@components/Loading'
 import axios, { AxiosRequestConfig } from 'axios'
-import { BOOK_ENDPOINT } from '@constants'
+import { BOOK_ENDPOINT, CHECKOUT_ENDPOINT } from '@constants'
 import { decodeToken } from 'react-jwt'
 import { DecodedToken, User } from '@types'
 
@@ -19,9 +19,16 @@ const items: BreadcrumbItem[] = [
 
 const token = localStorage.getItem('token')
 
+const postCheckout: AxiosRequestConfig = {
+  method: 'POST',
+  url: CHECKOUT_ENDPOINT,
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+}
+
 export const ShowBook = () => {
   if (!token) return null
-
   const tokenDecoded = decodeToken(token) as DecodedToken
   const navigate = useNavigate()
   const currentUser = JSON.parse(tokenDecoded?.user) as User
@@ -48,12 +55,34 @@ export const ShowBook = () => {
     },
   }
 
+  const [isCheckingOut, setIsCheckingOut] = React.useState(false)
+
+  const handleCheckout = async () => {
+    setIsCheckingOut(true)
+  }
+
+  React.useEffect(() => {
+    if (!isCheckingOut) return
+    const fetchData = async () => {
+      try {
+        postCheckout.data = { book_id: id, user_id: currentUser.id }
+        await axios(postCheckout)
+        navigate('/check-outs')
+      } catch (error) {
+        setError(error)
+      } finally {
+        setIsCheckingOut(false)
+      }
+    }
+    fetchData()
+  }, [isCheckingOut])
+
   React.useEffect(() => {
     if (!isDeleting) return
     const deleteBook = async () => {
       try {
         await axios(config)
-        navigate('/books')
+        navigate('/check-outs')
       } catch (error) {
         setError(error)
       } finally {
@@ -117,6 +146,15 @@ export const ShowBook = () => {
                   <Button variant="outlined" href="/Books" sx={{ mr: 1 }}>
                     Back
                   </Button>
+                  {!isLibrarian && !isCheckingOut && book.available && (
+                    <Button
+                      variant="contained"
+                      sx={{ mr: 1 }}
+                      onClick={handleCheckout}
+                    >
+                      Reservar
+                    </Button>
+                  )}
                   {isLibrarian && (
                     <>
                       <Button

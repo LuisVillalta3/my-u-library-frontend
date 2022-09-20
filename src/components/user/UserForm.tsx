@@ -52,6 +52,8 @@ export const UserForm: React.FC<Props> = ({
         last_name: user.last_name,
         email: user.email,
         role_id: user.role_id,
+        password: '',
+        password_confirmation: '',
       }}
       validationSchema={UserSchema}
       onSubmit={(values) => {
@@ -96,6 +98,37 @@ export const UserForm: React.FC<Props> = ({
             onChange={handleChange}
             error={touched.email && Boolean(errors.email)}
             helperText={touched.email && errors.email}
+          />
+          <TextField
+            fullWidth
+            sx={{ mb: 3 }}
+            id="password"
+            variant="outlined"
+            type="password"
+            name="password"
+            label="password"
+            value={values.password}
+            onChange={handleChange}
+            error={touched.password && Boolean(errors.password)}
+            helperText={touched.password && errors.password}
+          />
+          <TextField
+            fullWidth
+            sx={{ mb: 3 }}
+            type="password"
+            variant="outlined"
+            id="password_confirmation"
+            name="password_confirmation"
+            label="password_confirmation"
+            value={values.password_confirmation}
+            onChange={handleChange}
+            error={
+              touched.password_confirmation &&
+              Boolean(errors.password_confirmation)
+            }
+            helperText={
+              touched.password_confirmation && errors.password_confirmation
+            }
           />
           <FormControl fullWidth sx={{ mb: 3 }}>
             <InputLabel id="role-label">Role</InputLabel>

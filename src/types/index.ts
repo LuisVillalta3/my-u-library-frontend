@@ -17,6 +17,8 @@ export interface User extends TimeStamps {
   role_id: string | number
   email: string
   role?: Role
+  password?: string
+  password_confirmation?: string
 }
 
 export interface Book extends TimeStamps {
@@ -30,6 +32,7 @@ export interface Book extends TimeStamps {
   published_date: string
   in_stock: number
   available: boolean
+  check_out_requests?: CheckOutRequest[]
 }
 
 export type FetchResult = {
@@ -67,4 +70,21 @@ export interface DecodedToken {
   exp: number
   user: string
   time: number
+}
+
+export interface RequestStatus extends TimeStamps {
+  id: string | number
+  name: string
+  description: string
+  code: string
+}
+
+export interface CheckOutRequest extends TimeStamps {
+  id: string | number
+  book_id: string | number
+  user_id: string | number
+  request_status_id: string | number
+  user?: User
+  book?: Book
+  request_status?: RequestStatus
 }

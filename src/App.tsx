@@ -23,6 +23,8 @@ import { ShowGenre } from '@pages/Genres/show'
 import { EditGenre } from '@pages/Genres/edit'
 // LOGIN
 import { Login } from '@pages/Login'
+// CHECKOUTS
+import { CheckOutRequests } from '@pages/CheckOuts'
 
 export default function App() {
   return (
@@ -50,6 +52,8 @@ export default function App() {
           <Route path="/books/:id/edit" element={<EditBook />} />
           {/* DASHBOARD */}
           <Route path="/dashboard" element={<Dashboard />} />
+          {/* CHECKOUTS */}
+          <Route path="/check-outs" element={<CheckOutRequests />} />
           {/* LOGIN */}
           <Route path="/login" element={<Login />} />
           {/* OTHERS */}

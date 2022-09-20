@@ -8,3 +8,4 @@ export const AUTHOR_ENDPOINT = `${apiEndpoint}/author`
 export const GENRE_ENDPOINT = `${apiEndpoint}/genres`
 export const ROLE_ENDPOINT = `${apiEndpoint}/roles`
 export const AUTH_ENDPOINT = `${apiEndpoint}/auth/login`
+export const CHECKOUT_ENDPOINT = `${apiEndpoint}/check_out_requests`
